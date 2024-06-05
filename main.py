@@ -3,7 +3,7 @@
 Author: Linzjian666
 Date: 2024-06-05 16:37:09
 LastEditors: Linzjian666
-LastEditTime: 2024-06-05 17:32:13
+LastEditTime: 2024-06-05 17:36:04
 '''
 import yaml
 
@@ -26,9 +26,14 @@ def dedup_rules(rules):
             unique_rules.append(rule_key)
     return deduped_rules
 
+def process_path(path):
+    if "'" or '"' in path:
+        path = path.replace("'", '').replace('"', '')
+    return path
+
 if __name__ == "__main__":
-    input_file = input('请输入配置文件路径: ')
-    output_file = input('请输入输出文件路径: ')
+    input_file = process_path(input('请输入配置文件路径: '))
+    output_file = process_path(input('请输入输出文件路径: '))
     profile = read_profile(input_file)
     rules = profile.get('rules', [])
     deduped_rules = dedup_rules(rules)
